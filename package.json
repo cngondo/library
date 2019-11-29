@@ -5,7 +5,7 @@
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "DEBUG=app node app.js",
+    "start": "DEBUG=app nodemon app.js",
     "lint": "eslint app.js"
   },
   "author": "Cornellius Ngondo",
@@ -17,6 +17,7 @@
     "express": "4.15.2",
     "jquery": "3.4.1",
     "morgan": "1.9.1",
+    "nodemon": "2.0.1",
     "popper": "1.0.1"
   },
   "devDependencies": {
@@ -26,5 +27,16 @@
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-prettier": "3.1.1",
     "prettier": "1.19.1"
+  },
+  "nodemonConfig": {
+    "restartable": "rs",
+    "ignore": [
+      "node_modules/**/node_modules"
+    ],
+    "delay": "2500",
+    "env": {
+      "NODE_ENV": "development",
+      "PORT": 4000
+    }
   }
 }
