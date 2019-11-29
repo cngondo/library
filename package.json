@@ -4,7 +4,9 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "DEBUG=app node app.js",
+    "lint": "eslint app.js"
   },
   "author": "Cornellius Ngondo",
   "license": "ISC",
@@ -16,5 +18,13 @@
     "jquery": "3.4.1",
     "morgan": "1.9.1",
     "popper": "1.0.1"
+  },
+  "devDependencies": {
+    "eslint": "6.7.1",
+    "eslint-config-airbnb-base": "14.0.0",
+    "eslint-config-prettier": "6.7.0",
+    "eslint-plugin-import": "2.18.2",
+    "eslint-plugin-prettier": "3.1.1",
+    "prettier": "1.19.1"
   }
 }
