@@ -21,7 +21,7 @@ bookRouter.route('/').get((req, res) => {
   res.send('Hello books');
 });
 
-bookRouter.route('/singe', (req, res) => {
+bookRouter.route('/single').get((req, res) => {
   res.send('Hello single book!');
 });
 
