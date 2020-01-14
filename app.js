@@ -6,7 +6,6 @@ const path = require('path');
 
 const app = express();
 const port = process.env.PORT || 3000;
-const bookRouter = express.Router(); // Conglomerates all routers to avoid repetition
 
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, '/public'))); // Will look for all static files to serve
@@ -16,55 +15,8 @@ app.use('/js', express.static(path.join(__dirname, '/node_modules/jquery/dist/')
 app.set('views', './src/views');
 app.set('view engine', 'ejs');
 
-// Books example data to render
-const books = [
-  {
-    title: 'War and Peace',
-    genre: 'Historical Fiction',
-    author: 'Nev Nikolayovich',
-    read: false
-  },
-  {
-    title: 'War and Peace',
-    genre: 'Historical Fiction',
-    author: 'Nev Nikolayovich',
-    read: false
-  },
-  {
-    title: 'War and Peace',
-    genre: 'Historical Fiction',
-    author: 'Nev Nikolayovich',
-    read: false
-  },
-  {
-    title: 'War and Peace',
-    genre: 'Historical Fiction',
-    author: 'Nev Nikolayovich',
-    read: false
-  },
-  {
-    title: 'War and Peace',
-    genre: 'Historical Fiction',
-    author: 'Nev Nikolayovich',
-    read: false
-  }
-];
-
-// All routers related to book
-bookRouter.route('/').get((req, res) => {
-  res.render('books', {
-    title: 'My Library',
-    nav: [
-      { link: '/books', title: 'Books' },
-      { link: '/authors', title: 'Authors' }
-    ],
-    books
-  });
-});
-
-bookRouter.route('/single').get((req, res) => {
-  res.send('Hello single book!');
-});
+// Relative import of filepath to locate routes
+const bookRouter = require('./src/routes/bookRoutes'); // Conglomerates all routers to avoid repetition
 
 // Encapsulates all book router routes to a single route
 app.use('/books', bookRouter);
