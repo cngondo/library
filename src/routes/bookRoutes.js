@@ -37,7 +37,7 @@ const books = [
 
 // All routers related to book
 bookRouter.route('/').get((req, res) => {
-  res.render('books', {
+  res.render('bookListView', {
     title: 'My Library',
     nav: [
       { link: '/books', title: 'Books' },
@@ -47,8 +47,19 @@ bookRouter.route('/').get((req, res) => {
   });
 });
 
-bookRouter.route('/single').get((req, res) => {
-  res.send('Hello single book!');
+// Pass the book id to the single route
+bookRouter.route('/:id').get((req, res) => {
+  const { id } = req.params;
+  res.render('bookView', {
+    title: 'My Library',
+    nav: [
+      { link: '/books', title: 'Books' },
+      { link: '/authors', title: 'Authors' }
+    ],
+    book: books[id]
+  });
+
+  res.send('Hello Single book');
 });
 
 module.exports = bookRouter;
