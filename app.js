@@ -3,10 +3,24 @@ const chalk = require('chalk');
 const debug = require('debug')('app');
 const morgan = require('morgan'); // gives information about requests
 const path = require('path');
+const sql = require('mssql');
 
 const app = express();
 const port = process.env.PORT || 3000;
+// DB configuration
+const config = {
+  user: 'ngondolibrary',
+  password: 'Ng0nd0lib',
+  server: 'ngondolibrary.database.windows.net',
+  database: 'MyLibrary',
+  // because of windows Azure
+  options: {
+    encrypt: true
+  }
+};
 
+// Connect to the DB
+sql.connect(config).catch(err => debug(err));
 app.use(morgan('tiny'));
 app.use(express.static(path.join(__dirname, '/public'))); // Will look for all static files to serve
 app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
