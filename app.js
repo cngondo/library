@@ -22,6 +22,10 @@ const config = {
 // Connect to the DB
 sql.connect(config).catch(err => debug(err));
 app.use(morgan('tiny'));
+app.use((req, res, next) => {
+  debug('My middleware');
+  next();
+});
 app.use(express.static(path.join(__dirname, '/public'))); // Will look for all static files to serve
 app.use('/css', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/css')));
 app.use('/js', express.static(path.join(__dirname, '/node_modules/bootstrap/dist/js')));
