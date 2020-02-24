@@ -39,32 +39,38 @@ function router(nav) {
 
   // All routers related to book
   bookRouter.route('/').get((req, res) => {
-    const request = new sql.Request();
-    request
-      .query('select * from books')
-      .then(results => {
-        debug(results);
-        res.render('bookListView', {
-          title: 'My Library',
-          nav,
-          books: results.recordset
-        });
-      })
-      .catch(err => {
+    // IIFE for the query to get data
+    (async function query() {
+      const request = new sql.Request();
+      const { recordset } = await request.query('select * from books').catch(err => {
         debug(err);
       });
+      res.render('bookListView', {
+        title: 'My Library',
+        nav,
+        books: recordset
+      });
+    })();
   });
 
   // Pass the book id to the single route
   bookRouter.route('/:id').get((req, res) => {
     const { id } = req.params;
-    res.render('bookView', {
-      title: 'My Library',
-      nav,
-      book: books[id]
-    });
+    (async function query() {
+      const request = new sql.Request();
+      const { recordset } = await request
+        .input('id', sql.Int, id) // Use input to get request parameters
+        .query('select * from books where id = @id')
+        .catch(err => {
+          debug(err);
+        });
 
-    res.send('Hello Single book');
+      res.render('bookView', {
+        title: 'My Library',
+        nav,
+        book: recordset[0]
+      });
+    })();
   });
   return bookRouter;
 }
